@@ -18,8 +18,11 @@ import App
 /// if no command is given, it will default to "serve"
 let config = try Config()
 try config.setup()
+config.addConfigurable(command: Scythe.init, name: "scythe")
 
 let drop = try Droplet(config)
 try drop.setup()
 
-try drop.run()
+//try drop.run()
+
+try Scythe(config: config).run(arguments: [])

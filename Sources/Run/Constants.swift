@@ -2,7 +2,7 @@
 //  Constants.swift
 //  GitHubOneNoteSync
 //
-//  Created by Haskel Ash on 7/16/17.
+//  Created by Haskel Ash on 7/19/17.
 //
 //
 
@@ -13,8 +13,6 @@ let tokenEndpoint = "https://login.live.com/oauth20_token.srf"
 let clientId = "5298f1b7-e039-4876-9f29-c6839239b008"
 let clientSecret = ""
 let redirectUri = "https://github-onenote-sync.herokuapp.com/info"
-
-let token = ""
 let refreshToken = ""
 
 let session = URLSession(configuration: .default)

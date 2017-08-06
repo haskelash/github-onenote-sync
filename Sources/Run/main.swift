@@ -24,7 +24,8 @@ let drop = try Droplet(config)
 try drop.setup()
 
 let token = refreshToken(drop: drop) ?? ""
-let request = Request(method: .get, uri: "https://www.onenote.com/api/v1.0/me/notes/notebooks?expand=sectionGroups,sections")
+let request = Request(method: .get, uri: "https://www.onenote.com/api/v1.0/me/notes/notebooks?"
+    + "select=id,name,sectionGroups,sections&expand=sectionGroups,sections")
 request.headers = ["Authorization": "Bearer \(token)"]
 request.body = .init("")
 drop.console.print("Fetching notebooks...")
@@ -37,12 +38,12 @@ let notebooksData = response.data["value"]?.array ?? []
 for notebookData in notebooksData {
     let id = notebookData["id"]!.string!
     let name = notebookData["name"]!.string!
-    let sectionGroupsData = notebookData["sectionGroups"]!.array!
-    let sectionsData = notebookData ["sections"]!.array!
+    let sectionGroups = notebookData["sectionGroups"]!.array!.map{SectionGroup(node: $0)}
+    let sections = notebookData["sections"]!.array!.map{Section(node: $0)}
 
     let notebook = Notebook(id: id,
                             name: name,
-                            sectionGroups: SectionGroup.from(sectionGroupsData),
-                            sections: Section.from(sectionsData))
+                            sectionGroups: sectionGroups,
+                            sections: sections)
     notebooks.append(notebook)
 }
